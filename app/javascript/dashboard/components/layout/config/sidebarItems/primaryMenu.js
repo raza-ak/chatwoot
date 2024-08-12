@@ -65,6 +65,13 @@ const primaryMenuItems = accountId => [
     toState: frontendURL(`accounts/${accountId}/settings`),
     toStateName: 'settings_home',
   },
+  {
+    icon: 'leadsio',
+    key: 'leadsio',
+    label: 'LEADSIO',
+    toState: frontendURL(`accounts/${accountId}/leadsio`),
+    toStateName: 'leadsio_dashboard',
+  },
 ];
 
 export default primaryMenuItems;
