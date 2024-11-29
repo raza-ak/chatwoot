@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         end
 
         scope module: :accounts do
+          resources :funnel_compuexpedientes, except: [:new, :edit]
           namespace :actions do
             resource :contact_merge, only: [:create]
           end

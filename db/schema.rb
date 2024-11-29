@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_29_174531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
@@ -578,6 +578,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_16_003531) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "funnel_compuexpedientes", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "funnel_url", limit: 3000, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_funnel_compuexpedientes_on_account_id"
   end
 
   create_table "inbox_members", id: :serial, force: :cascade do |t|
