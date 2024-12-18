@@ -1,8 +1,8 @@
 class Api::V1::Accounts::FunnelCompuexpedientesController < Api::V1::Accounts::BaseController
   skip_around_action :switch_locale_using_account_locale
   skip_around_action :switch_locale
-  before_action :current_account
-  before_action :fetch_funnel, except: [:index, :create]
+  before_action :current_account, except: [:search_by_name]
+  before_action :fetch_funnel, except: [:index, :create, :search_by_name]
 
   def index
     funnels = Current.account.funnel_compuexpedientes
@@ -15,6 +15,22 @@ class Api::V1::Accounts::FunnelCompuexpedientesController < Api::V1::Accounts::B
 
   def show
     render json: { data: funnel_details(@funnel) }, status: :ok
+  end
+
+  def search_by_name
+    account = Account.find_by(name: params[:name])
+
+    return render json: { error: 'Account not found' }, status: :not_found if account.blank?
+
+    data = []
+    funnels = account.funnel_compuexpedientes
+    return render json: { error: "Funnels does not exist for #{account.name}" }, status: :not_found if funnels.blank?
+
+    funnels.each do |funnel|
+      data << funnel_details(funnel)
+    end
+
+    render json: { data: data }, status: :ok
   end
 
   def create
